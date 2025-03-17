@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"myapp/internal/constants"
 	"myapp/internal/database"
 	"myapp/pkg/logger"
 	"time"
@@ -79,14 +80,14 @@ func ParseToken(tokenString string) (*JWTClaims, error) {
 		exists, err := redisUtils.Exists(ctx, redisKey)
 		if err != nil || !exists {
 			logger.Debug("令牌在Redis中不存在: %s", claims.UserID)
-			return nil, errors.New("令牌已失效")
+			return nil, errors.New(constants.MSG_TOKEN_EXPIRED)
 		}
 
 		return claims, nil
 	}
 
 	logger.Debug("无效的令牌")
-	return nil, errors.New("无效的令牌")
+	return nil, errors.New(constants.MSG_TOKEN_INVALID)
 }
 
 // InvalidateToken 使令牌失效

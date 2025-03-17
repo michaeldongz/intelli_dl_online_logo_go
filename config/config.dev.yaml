@@ -5,11 +5,11 @@ server:
 redis:
   host: 47.93.186.33
   port: 6379
-  password: "JdK3@hT7sN1U"
+  password: "JdK"
   db: 11
 
 mongodb:
-  uri: "mongodb://adminUser:01J7CWNBJZZZN3746A7P0HKY66@47.93.186.33:27017/"
+  uri: "mongodb://adminUser:01@47.93.186.33:27017/"
   database: "intelli_dl_online_logo_dev"
 
 log:

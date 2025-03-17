@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"myapp/internal/constants"
 	"myapp/internal/dto/request"
 	"myapp/internal/dto/response"
 	"myapp/internal/models"
@@ -30,7 +31,7 @@ func (s *UserService) Register(ctx context.Context, req *request.UserRegisterReq
 	existingUser, err := s.userRepo.FindByEmail(ctx, req.Email)
 	if err == nil && existingUser != nil {
 		logger.Warn("邮箱已被注册: %s", req.Email)
-		return nil, errors.New("邮箱已被注册")
+		return nil, errors.New(constants.MSG_EMAIL_REGISTERED)
 	}
 
 	// 创建新用户
@@ -58,13 +59,13 @@ func (s *UserService) Login(ctx context.Context, req *request.UserLoginRequest) 
 	user, err := s.userRepo.FindByEmail(ctx, req.Email)
 	if err != nil {
 		logger.Warn("登录失败，用户不存在: %s", req.Email)
-		return nil, errors.New("用户不存在")
+		return nil, errors.New(constants.MSG_USER_NOT_EXIST)
 	}
 
 	// 验证密码
 	if !s.userRepo.CheckPassword(req.Password, user.Password) {
 		logger.Warn("登录失败，密码错误: %s", req.Email)
-		return nil, errors.New("密码错误")
+		return nil, errors.New(constants.MSG_PASSWORD_ERROR)
 	}
 
 	// 生成JWT令牌

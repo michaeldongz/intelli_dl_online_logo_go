@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"myapp/internal/constants"
 	"myapp/internal/dto/request"
 	"myapp/internal/dto/response"
 	"myapp/internal/service"
@@ -27,7 +28,7 @@ func (c *UserController) Register(ctx *gin.Context) {
 	var req request.UserRegisterRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		logger.Warn("注册请求参数错误: %v", err)
-		utils.ErrorResponse(ctx, 400, "请求参数错误: "+err.Error())
+		utils.BadRequest(ctx, err)
 		return
 	}
 
@@ -35,7 +36,7 @@ func (c *UserController) Register(ctx *gin.Context) {
 	user, err := c.userService.Register(ctx, &req)
 	if err != nil {
 		logger.Error("注册失败: %s, 错误: %v", req.Email, err)
-		utils.ErrorResponse(ctx, 500, "注册失败: "+err.Error())
+		utils.ErrorResponse(ctx, constants.INTERNAL_SERVER_ERROR, constants.MSG_REGISTER_FAILED+": "+err.Error())
 		return
 	}
 
@@ -50,7 +51,7 @@ func (c *UserController) Login(ctx *gin.Context) {
 	var req request.UserLoginRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		logger.Warn("登录请求参数错误: %v", err)
-		utils.ErrorResponse(ctx, 400, "请求参数错误: "+err.Error())
+		utils.BadRequest(ctx, err)
 		return
 	}
 
@@ -58,7 +59,7 @@ func (c *UserController) Login(ctx *gin.Context) {
 	resp, err := c.userService.Login(ctx, &req)
 	if err != nil {
 		logger.Warn("登录失败: %s, 错误: %v", req.Email, err)
-		utils.ErrorResponse(ctx, 401, "登录失败: "+err.Error())
+		utils.Unauthorized(ctx, constants.MSG_LOGIN_FAILED+": "+err.Error())
 		return
 	}
 

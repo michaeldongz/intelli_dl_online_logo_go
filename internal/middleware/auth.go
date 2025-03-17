@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"myapp/internal/constants"
 	"myapp/internal/service"
 	"myapp/internal/utils"
 	"myapp/pkg/logger"
@@ -15,7 +16,7 @@ func JWTAuth() gin.HandlerFunc {
 		authHeader := c.GetHeader("Authorization")
 		if authHeader == "" {
 			logger.Warn("未提供认证令牌，IP: %s, 路径: %s", c.ClientIP(), c.Request.URL.Path)
-			utils.ErrorResponse(c, 401, "未提供认证令牌")
+			utils.Unauthorized(c, constants.MSG_TOKEN_REQUIRED)
 			c.Abort()
 			return
 		}
@@ -24,7 +25,7 @@ func JWTAuth() gin.HandlerFunc {
 		parts := strings.SplitN(authHeader, " ", 2)
 		if !(len(parts) == 2 && parts[0] == "Bearer") {
 			logger.Warn("认证格式错误，IP: %s, 路径: %s", c.ClientIP(), c.Request.URL.Path)
-			utils.ErrorResponse(c, 401, "认证格式错误")
+			utils.Unauthorized(c, constants.MSG_TOKEN_FORMAT_ERROR)
 			c.Abort()
 			return
 		}
@@ -33,7 +34,7 @@ func JWTAuth() gin.HandlerFunc {
 		claims, err := service.ParseToken(parts[1])
 		if err != nil {
 			logger.Warn("无效的令牌: %v, IP: %s, 路径: %s", err, c.ClientIP(), c.Request.URL.Path)
-			utils.ErrorResponse(c, 401, "无效的令牌: "+err.Error())
+			utils.Unauthorized(c, constants.MSG_TOKEN_INVALID+": "+err.Error())
 			c.Abort()
 			return
 		}
