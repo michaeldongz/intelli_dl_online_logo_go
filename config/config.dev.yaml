@@ -1,0 +1,24 @@
+server:
+  port: 8080
+  mode: debug
+
+redis:
+  host: 47.93.186.33
+  port: 6379
+  password: "JdK3@hT7sN1U"
+  db: 11
+
+mongodb:
+  uri: "mongodb://adminUser:01J7CWNBJZZZN3746A7P0HKY66@47.93.186.33:27017/"
+  database: "intelli_dl_online_logo_dev"
+
+log:
+  level: "debug"
+  format: "console"  # console 或 json
+  output: "stdout"   # stdout 或文件路径
+  directory: "D:/logs/intelli_dl_online_logo"
+  filename: "app"
+  max_size: 100      # MB
+  max_age: 30        # 天
+  max_backups: 10
+  compress: false 
