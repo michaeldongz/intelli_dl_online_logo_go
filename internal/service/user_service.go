@@ -39,6 +39,7 @@ func (s *UserService) Register(ctx context.Context, req *request.UserRegisterReq
 		Email:    req.Email,
 		Nickname: req.Nickname,
 		Password: req.Password,
+		Role:     models.ROLE_USER, // 设置默认角色为普通用户
 	}
 
 	err = s.userRepo.Create(ctx, user)
@@ -47,7 +48,7 @@ func (s *UserService) Register(ctx context.Context, req *request.UserRegisterReq
 		return nil, err
 	}
 
-	logger.Info("用户注册成功: %s, ID: %s", user.Email, user.ID.Hex())
+	logger.Info("用户注册成功: %s, ID: %s, 角色: %d", user.Email, user.ID.Hex(), user.Role)
 	return user, nil
 }
 
@@ -68,14 +69,14 @@ func (s *UserService) Login(ctx context.Context, req *request.UserLoginRequest) 
 		return nil, errors.New(constants.MSG_PASSWORD_ERROR)
 	}
 
-	// 生成JWT令牌
-	token, err := GenerateToken(user.ID.Hex(), user.Email)
+	// 生成JWT令牌，包含用户角色
+	token, err := GenerateToken(user.ID.Hex(), user.Email, user.Role)
 	if err != nil {
 		logger.Error("生成令牌失败: %s, 错误: %v", req.Email, err)
 		return nil, err
 	}
 
-	logger.Info("用户登录成功: %s, ID: %s", user.Email, user.ID.Hex())
+	logger.Info("用户登录成功: %s, ID: %s, 角色: %d", user.Email, user.ID.Hex(), user.Role)
 
 	// 创建登录响应
 	loginResp := response.NewUserLoginResponse(user, token)

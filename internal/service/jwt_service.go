@@ -20,12 +20,13 @@ var (
 type JWTClaims struct {
 	UserID string `json:"user_id"`
 	Email  string `json:"email"`
+	Role   int    `json:"role"`
 	jwt.RegisteredClaims
 }
 
 // GenerateToken 生成JWT令牌
-func GenerateToken(userID, email string) (string, error) {
-	logger.Debug("为用户生成令牌: %s, ID: %s", email, userID)
+func GenerateToken(userID, email string, role int) (string, error) {
+	logger.Debug("为用户生成令牌: %s, ID: %s, 角色: %d", email, userID, role)
 
 	// 设置过期时间为24小时
 	expirationTime := time.Now().Add(24 * time.Hour)
@@ -33,6 +34,7 @@ func GenerateToken(userID, email string) (string, error) {
 	claims := &JWTClaims{
 		UserID: userID,
 		Email:  email,
+		Role:   role,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expirationTime),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),

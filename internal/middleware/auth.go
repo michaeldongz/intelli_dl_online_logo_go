@@ -42,8 +42,10 @@ func JWTAuth() gin.HandlerFunc {
 		// 将用户信息存储到上下文中
 		c.Set("userID", claims.UserID)
 		c.Set("email", claims.Email)
-		logger.Debug("用户认证成功: %s, ID: %s, IP: %s, 路径: %s",
-			claims.Email, claims.UserID, c.ClientIP(), c.Request.URL.Path)
+		c.Set("role", claims.Role)
+
+		logger.Debug("用户认证成功: %s, ID: %s, 角色: %d, IP: %s, 路径: %s",
+			claims.Email, claims.UserID, claims.Role, c.ClientIP(), c.Request.URL.Path)
 		c.Next()
 	}
 }

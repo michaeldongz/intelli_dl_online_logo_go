@@ -66,3 +66,23 @@ func (c *UserController) Login(ctx *gin.Context) {
 	logger.Info("登录成功: %s", req.Email)
 	utils.Success(ctx, resp)
 }
+
+// GetUserInfo 获取当前用户信息
+func (c *UserController) GetUserInfo(ctx *gin.Context) {
+	// 从上下文中获取用户ID
+	userID, _ := ctx.Get("userID")
+
+	logger.Info("获取用户信息请求，用户ID: %s", userID)
+
+	// 获取用户信息
+	user, err := c.userService.GetUserByID(ctx, userID.(string))
+	if err != nil {
+		logger.Error("获取用户信息失败: %v", err)
+		utils.NotFound(ctx, constants.MSG_USER_NOT_EXIST)
+		return
+	}
+
+	// 转换为响应格式
+	userResp := response.NewUserResponse(user)
+	utils.Success(ctx, userResp)
+}

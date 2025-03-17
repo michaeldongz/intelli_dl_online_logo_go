@@ -9,6 +9,7 @@ type UserResponse struct {
 	ID        string `json:"id"`
 	Nickname  string `json:"nickname"`
 	Email     string `json:"email"`
+	Role      int    `json:"role"`
 	CreatedAt string `json:"created_at"`
 }
 
@@ -24,6 +25,7 @@ func NewUserResponse(user *models.User) UserResponse {
 		ID:        user.ID.Hex(),
 		Nickname:  user.Nickname,
 		Email:     user.Email,
+		Role:      user.Role,
 		CreatedAt: user.CreatedAt.Format("2006-01-02 15:04:05"),
 	}
 }

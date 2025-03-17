@@ -23,4 +23,7 @@ const (
 	MSG_TOKEN_EXPIRED      = "令牌已过期"
 	MSG_TOKEN_REQUIRED     = "未提供认证令牌"
 	MSG_TOKEN_FORMAT_ERROR = "认证格式错误"
+
+	// 权限相关错误
+	MSG_PERMISSION_DENIED = "权限不足"
 )
