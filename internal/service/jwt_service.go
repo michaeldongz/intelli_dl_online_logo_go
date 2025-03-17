@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"myapp/internal/constants"
-	"myapp/internal/database"
-	"myapp/pkg/logger"
+	"intelli_dl_onling_logo/internal/constants"
+	"intelli_dl_onling_logo/internal/database"
+	"intelli_dl_onling_logo/pkg/logger"
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"

@@ -9,7 +9,7 @@ redis:
   db: 11
 
 mongodb:
-  uri: "mongodb://adminUser:01@47.93.186.33:27017/"
+  uri: "mongodb://adminUser:123@47.93.186.33:27017/"
   database: "intelli_dl_online_logo_dev"
 
 log:
@@ -22,3 +22,11 @@ log:
   max_age: 30        # 天
   max_backups: 10
   compress: false 
+
+# 新增邮件配置
+mail:
+  host: smtp.example.com
+  port: 587
+  username: your-email@example.com
+  password: your-password
+  from_name: Your App Name 

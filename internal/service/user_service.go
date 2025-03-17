@@ -3,12 +3,12 @@ package service
 import (
 	"context"
 	"errors"
-	"myapp/internal/constants"
-	"myapp/internal/dto/request"
-	"myapp/internal/dto/response"
-	"myapp/internal/models"
-	"myapp/internal/repository"
-	"myapp/pkg/logger"
+	"intelli_dl_onling_logo/internal/constants"
+	"intelli_dl_onling_logo/internal/dto/request"
+	"intelli_dl_onling_logo/internal/dto/response"
+	"intelli_dl_onling_logo/internal/models"
+	"intelli_dl_onling_logo/internal/repository"
+	"intelli_dl_onling_logo/pkg/logger"
 )
 
 // UserService 用户业务逻辑层

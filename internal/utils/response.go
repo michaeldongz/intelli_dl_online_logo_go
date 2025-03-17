@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"myapp/internal/constants"
-	"myapp/internal/dto/response"
+	"intelli_dl_onling_logo/internal/constants"
+	"intelli_dl_onling_logo/internal/dto/response"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

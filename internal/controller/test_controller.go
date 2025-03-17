@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"myapp/internal/utils"
-	"myapp/pkg/logger"
+	"intelli_dl_onling_logo/internal/utils"
+	"intelli_dl_onling_logo/pkg/logger"
 
 	"github.com/gin-gonic/gin"
 )

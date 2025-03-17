@@ -1,10 +1,10 @@
 package router
 
 import (
-	"myapp/internal/controller"
-	"myapp/internal/middleware"
-	"myapp/internal/models"
-	"myapp/pkg/logger"
+	"intelli_dl_onling_logo/internal/controller"
+	"intelli_dl_onling_logo/internal/middleware"
+	"intelli_dl_onling_logo/internal/models"
+	"intelli_dl_onling_logo/pkg/logger"
 
 	"github.com/gin-gonic/gin"
 )

@@ -3,8 +3,8 @@ package database
 import (
 	"context"
 	"fmt"
-	"myapp/config"
-	"myapp/pkg/logger"
+	"intelli_dl_onling_logo/config"
+	"intelli_dl_onling_logo/pkg/logger"
 	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"

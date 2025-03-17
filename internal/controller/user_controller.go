@@ -1,12 +1,12 @@
 package controller
 
 import (
-	"myapp/internal/constants"
-	"myapp/internal/dto/request"
-	"myapp/internal/dto/response"
-	"myapp/internal/service"
-	"myapp/internal/utils"
-	"myapp/pkg/logger"
+	"intelli_dl_onling_logo/internal/constants"
+	"intelli_dl_onling_logo/internal/dto/request"
+	"intelli_dl_onling_logo/internal/dto/response"
+	"intelli_dl_onling_logo/internal/service"
+	"intelli_dl_onling_logo/internal/utils"
+	"intelli_dl_onling_logo/pkg/logger"
 
 	"github.com/gin-gonic/gin"
 )

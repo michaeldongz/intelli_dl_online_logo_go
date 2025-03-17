@@ -21,4 +21,12 @@ log:
   max_size: 100
   max_age: 30
   max_backups: 10
-  compress: true 
+  compress: true
+
+# 新增邮件配置
+mail:
+  host: smtp.example.com
+  port: 587
+  username: your-email@example.com
+  password: your-password
+  from_name: Your App Name 

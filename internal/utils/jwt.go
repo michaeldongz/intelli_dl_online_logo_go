@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"myapp/internal/database"
+	"intelli_dl_onling_logo/internal/database"
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"

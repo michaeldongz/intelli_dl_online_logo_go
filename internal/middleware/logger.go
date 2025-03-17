@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"bytes"
+	"intelli_dl_onling_logo/pkg/logger"
 	"io"
-	"myapp/pkg/logger"
 	"time"
 
 	"github.com/gin-gonic/gin"

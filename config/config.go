@@ -42,6 +42,14 @@ type LogConfig struct {
 	Compress   bool   `mapstructure:"compress"`
 }
 
+type EmailConfig struct {
+	Host     string `mapstructure:"host"`
+	Port     int    `mapstructure:"port"`
+	Username string `mapstructure:"username"`
+	Password string `mapstructure:"password"`
+	FromName string `mapstructure:"from_name"`
+}
+
 var GlobalConfig Config
 
 func InitConfig(env string) error {

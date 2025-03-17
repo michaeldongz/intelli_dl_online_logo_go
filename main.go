@@ -3,11 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
+	"intelli_dl_onling_logo/config"
+	"intelli_dl_onling_logo/internal/database"
+	"intelli_dl_onling_logo/pkg/logger"
+	"intelli_dl_onling_logo/router"
 	"log"
-	"myapp/config"
-	"myapp/internal/database"
-	"myapp/pkg/logger"
-	"myapp/router"
 
 	"github.com/gin-gonic/gin"
 )

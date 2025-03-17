@@ -1,7 +1,7 @@
 package response
 
 import (
-	"myapp/internal/models"
+	"intelli_dl_onling_logo/internal/models"
 )
 
 // UserResponse 用户信息响应

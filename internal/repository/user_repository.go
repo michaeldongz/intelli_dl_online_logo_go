@@ -2,9 +2,9 @@ package repository
 
 import (
 	"context"
-	"myapp/internal/database"
-	"myapp/internal/models"
-	"myapp/pkg/logger"
+	"intelli_dl_onling_logo/internal/database"
+	"intelli_dl_onling_logo/internal/models"
+	"intelli_dl_onling_logo/pkg/logger"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"

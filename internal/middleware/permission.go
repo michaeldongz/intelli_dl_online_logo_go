@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	"myapp/internal/constants"
-	"myapp/internal/utils"
-	"myapp/pkg/logger"
+	"intelli_dl_onling_logo/internal/constants"
+	"intelli_dl_onling_logo/internal/utils"
+	"intelli_dl_onling_logo/pkg/logger"
 
 	"github.com/gin-gonic/gin"
 )

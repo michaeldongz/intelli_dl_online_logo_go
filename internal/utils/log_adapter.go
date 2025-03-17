@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"myapp/pkg/logger"
+	"intelli_dl_onling_logo/pkg/logger"
 )
 
 // 以下函数是为了兼容现有代码而提供的适配器
