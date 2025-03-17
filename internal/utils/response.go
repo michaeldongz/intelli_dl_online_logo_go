@@ -1,30 +1,18 @@
 package utils
 
 import (
+	"myapp/internal/dto/response"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-type Response struct {
-	Code    int         `json:"code"`
-	Message string      `json:"message"`
-	Data    interface{} `json:"data"`
-}
-
+// Success 返回成功响应
 func Success(c *gin.Context, data interface{}) {
-	c.JSON(http.StatusOK, Response{
-		Code:    200,
-		Message: "success",
-		Data:    data,
-	})
+	c.JSON(http.StatusOK, response.Success(data))
 }
 
 // ErrorResponse 返回错误响应
 func ErrorResponse(c *gin.Context, code int, message string) {
-	c.JSON(http.StatusOK, Response{
-		Code:    code,
-		Message: message,
-		Data:    nil,
-	})
+	c.JSON(http.StatusOK, response.Error(code, message))
 }

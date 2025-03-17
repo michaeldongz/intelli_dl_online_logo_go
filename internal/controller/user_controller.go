@@ -1,7 +1,8 @@
 package controller
 
 import (
-	"myapp/internal/models"
+	"myapp/internal/dto/request"
+	"myapp/internal/dto/response"
 	"myapp/internal/service"
 	"myapp/internal/utils"
 	"myapp/pkg/logger"
@@ -23,7 +24,7 @@ func NewUserController() *UserController {
 
 // Register 用户注册
 func (c *UserController) Register(ctx *gin.Context) {
-	var req models.UserRegisterRequest
+	var req request.UserRegisterRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		logger.Warn("注册请求参数错误: %v", err)
 		utils.ErrorResponse(ctx, 400, "请求参数错误: "+err.Error())
@@ -39,12 +40,14 @@ func (c *UserController) Register(ctx *gin.Context) {
 	}
 
 	logger.Info("注册成功: %s", req.Email)
-	utils.Success(ctx, user)
+	// 转换为响应格式
+	userResp := response.NewUserResponse(user)
+	utils.Success(ctx, userResp)
 }
 
 // Login 用户登录
 func (c *UserController) Login(ctx *gin.Context) {
-	var req models.UserLoginRequest
+	var req request.UserLoginRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		logger.Warn("登录请求参数错误: %v", err)
 		utils.ErrorResponse(ctx, 400, "请求参数错误: "+err.Error())
