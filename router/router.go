@@ -19,6 +19,7 @@ func InitRouter() *gin.Engine {
 	// 控制器实例
 	userController := controller.NewUserController()
 	testController := controller.NewTestController()
+	codeController := controller.NewCodeController()
 
 	logger.Info("初始化路由...")
 
@@ -34,6 +35,12 @@ func InitRouter() *gin.Engine {
 	{
 		userGroup.POST("/register", userController.Register)
 		userGroup.POST("/login", userController.Login)
+	}
+
+	// 验证码相关路由 - 无需认证
+	codeGroup := r.Group("/api/code")
+	{
+		codeGroup.POST("/send", codeController.SendEmailCode)
 	}
 
 	// 需要认证的路由

@@ -11,6 +11,7 @@ type Config struct {
 	Redis   RedisConfig   `mapstructure:"redis"`
 	MongoDB MongoDBConfig `mapstructure:"mongodb"`
 	Log     LogConfig     `mapstructure:"log"`
+	Email   EmailConfig   `mapstructure:"mail"`
 }
 
 type ServerConfig struct {
