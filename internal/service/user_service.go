@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"fmt"
 	"intelli_dl_onling_logo/internal/constants"
 	"intelli_dl_onling_logo/internal/dto/request"
 	"intelli_dl_onling_logo/internal/dto/response"
@@ -14,12 +15,14 @@ import (
 // UserService 用户业务逻辑层
 type UserService struct {
 	userRepo *repository.UserRepository
+	codeRepo *repository.CodeRepository
 }
 
 // NewUserService 创建用户服务实例
 func NewUserService() *UserService {
 	return &UserService{
 		userRepo: repository.NewUserRepository(),
+		codeRepo: repository.NewCodeRepository(),
 	}
 }
 
@@ -32,6 +35,42 @@ func (s *UserService) Register(ctx context.Context, req *request.UserRegisterReq
 	if err == nil && existingUser != nil {
 		logger.Warn("邮箱已被注册: %s", req.Email)
 		return nil, errors.New(constants.MSG_EMAIL_REGISTERED)
+	}
+
+	// 校验验证码
+	logger.Info("校验验证码: %s, 邮箱: %s", req.Code, req.Email)
+	// 从Redis获取验证码
+	cachedCode, err := s.codeRepo.GetFromRedis(ctx, req.Email)
+	if err != nil {
+		logger.Warn("验证码不存在或已过期: %s", req.Email)
+		return nil, errors.New(constants.MSG_CODE_NOT_EXIST)
+	}
+
+	// 验证码不匹配
+	if cachedCode != req.Code {
+		logger.Warn("验证码错误: %s, 输入: %s, 实际: %s", req.Email, req.Code, cachedCode)
+		return nil, errors.New(constants.MSG_CODE_ERROR)
+	}
+
+	// 从Redis中删除验证码
+	key := fmt.Sprintf("code:email:%s", req.Email)
+	err = s.codeRepo.Delete(ctx, key)
+	if err != nil {
+		logger.Error("删除Redis验证码失败: %s, 错误: %v", req.Email, err)
+	}
+
+	// 验证码验证成功，更新MongoDB中的验证码状态
+	codeRecord, err := s.codeRepo.FindByEmailAndCode(ctx, req.Email, req.Code)
+
+	if err != nil {
+		// 不影响使用逻辑，所以不返回错误，只输出日志
+		logger.Warn("验证码记录不存在或已过期: %s", req.Email)
+	}
+
+	err = s.codeRepo.UpdateCodeUsed(ctx, codeRecord)
+	if err != nil {
+		// 不影响使用逻辑，所以不返回错误，只输出日志
+		logger.Error("更新验证码状态失败: %s, 错误: %v", req.Email, err)
 	}
 
 	// 创建新用户

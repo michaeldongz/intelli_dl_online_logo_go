@@ -32,4 +32,7 @@ const (
 
 	// 验证码相关
 	MSG_EMAIL_CODE_EXIST = "验证码已发送，有效期5分钟，请前往邮箱查看，勿重复请求"
+	MSG_CODE_NOT_EXIST   = "验证码不存在或已过期"
+	MSG_CODE_ERROR       = "验证码错误"
+	MSG_EMAIL_EXIST      = "当前邮箱已使用"
 )

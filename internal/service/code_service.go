@@ -12,11 +12,14 @@ import (
 	"intelli_dl_onling_logo/pkg/logger"
 	"math/rand"
 	"time"
+
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 // CodeService 验证码业务逻辑层
 type CodeService struct {
 	codeRepo    *repository.CodeRepository
+	userRepo    *repository.UserRepository
 	emailClient *utils.EmailClient
 }
 
@@ -24,6 +27,7 @@ type CodeService struct {
 func NewCodeService() *CodeService {
 	return &CodeService{
 		codeRepo:    repository.NewCodeRepository(),
+		userRepo:    repository.NewUserRepository(),
 		emailClient: utils.NewEmailClient(),
 	}
 }
@@ -32,9 +36,21 @@ func NewCodeService() *CodeService {
 func (s *CodeService) SendEmailCode(ctx context.Context, req *request.SendCodeRequest) (*response.CodeResponse, error) {
 	logger.Info("发送邮箱验证码请求: %s", req.Email)
 
+	// 检查当前邮箱是否已被使用，如果已使用，不允许用当前邮箱创建账户
+	user, err := s.userRepo.FindByEmail(ctx, req.Email)
+	if err != nil && err != mongo.ErrNoDocuments {
+		logger.Error("检查邮箱是否已被使用失败: %s, 错误: %v", req.Email, err)
+		return nil, errors.New(constants.MSG_EMAIL_FORMAT_ERROR)
+	}
+
+	if user != nil {
+		logger.Warn("邮箱已被使用: %s", req.Email)
+		return nil, errors.New(constants.MSG_EMAIL_EXIST)
+	}
+
 	// 检查邮箱是否已有验证码
 	exists, err := s.codeRepo.CheckEmailHasCode(ctx, req.Email)
-	if err != nil && err != context.DeadlineExceeded {
+	if err != nil && err != mongo.ErrNoDocuments {
 		logger.Error("检查邮箱验证码失败: %s, 错误: %v", req.Email, err)
 		return nil, errors.New(constants.MSG_EMAIL_FORMAT_ERROR)
 	}
